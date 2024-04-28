@@ -1,6 +1,6 @@
 {
-    "versionCode": 102,
-    "version": "v1.2",
+    "versionCode": 103,
+    "version": "v1.3",
     "zipUrl": "https://github.com/xfl12345/magisk-ddns-go/releases/download/latest/magisk-ddns-go.zip",
     "changelog": "https://testingcf.jsdelivr.net/gh/xfl12345/magisk-ddns-go@latest/changelog.md"
 }
