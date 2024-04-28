@@ -269,7 +269,7 @@ update_and_restart() {
     if pgrep -f 'ddns-go' >/dev/null; then
         pkill ddns-go
     fi
-    ASH_STANDALONE=1 busybox sh -c "$MODDIR/bin/ddns-go -c $MODDIR/config/ddns_go_config.yaml" &
+    ASH_STANDALONE=1 busybox sh -c "$MODDIR/bin/ddns-go -l 127.0.0.1:9876 -c $MODDIR/config/ddns_go_config.yaml" &
 }
 
 # 更新失败

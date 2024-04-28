@@ -1,7 +1,7 @@
 while true; do
     process="$(pgrep ddns-go)"
     if [ -z "$process" ]; then
-        $MODDIR/bin/ddns-go -c $MODDIR/config/ddns_go_config.yaml
+        $MODDIR/bin/ddns-go -l 127.0.0.1:9876 -c $MODDIR/config/ddns_go_config.yaml
     fi
     sleep 3
 done
