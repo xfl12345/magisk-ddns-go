@@ -25,7 +25,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          body: "自动打包发布的包"
+          body: "自动打包发布的包。更新详情请看：https://github.com/xfl12345/magisk-ddns-go/blob/master/changelog.md"
           draft: false
           prerelease: false
 
