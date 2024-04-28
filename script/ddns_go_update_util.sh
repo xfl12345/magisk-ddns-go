@@ -247,7 +247,7 @@ extract_ddns_go_archive_file() {
     tar -xzf "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" -C "${MODDIR}/tmp" 2>&1 > /dev/null
     mv -f "${MODDIR}/tmp/ddns-go" "${MODDIR}/bin/ddns-go"
     chmod 755 "${MODDIR}/bin/ddns-go"
-    rm -r "${MODDIR}/tmp"
+    rm -r "${MODDIR}/tmp/"
 }
 
 # 下载并解压更新包
