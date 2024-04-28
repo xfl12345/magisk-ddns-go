@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Zip
-      run: cd $GITHUB_WORKSPACE/ && sh ./pack_helper.sh
+      run: sh ./pack_helper.sh
       
     - name: Create Release
       id: create_release
