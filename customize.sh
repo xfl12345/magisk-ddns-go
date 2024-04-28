@@ -28,6 +28,15 @@ else
     ui_print "It seem that you were not connected with Internet. Mission failed..."; abort;
 fi
 
+if [ -e /system/etc/resolv.conf ]; then
+	ui_print "- File [/system/etc/resolv.conf] already exist. Merging..."
+	cat $MODPATH/my_res/resolv.conf /system/etc/resolv.conf > /system/etc/resolv.conf
+else
+	ui_print "- File [/system/etc/resolv.conf] did not exist. Setting..."
+	mkdir -p /system/etc
+	cat $MODPATH/my_res/resolv.conf > /system/etc/resolv.conf
+fi
+
 ui_print "- Checking download tools"
 if [[ x"CURL_PATH" == "x" ]]; then
     if [[ x"WGET_PATH" == "x" ]]; then
