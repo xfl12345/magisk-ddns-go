@@ -43,7 +43,7 @@ RESULT_CHECK_CONNECTIVITY=""
 # RESULT_EXTRACT_DDNS_GO_ARCHIVE_FILE=""
 
 get_log_date() {
-    echo "$(date \"+%Y-%m-%d %H:%M:%S\")"
+    echo "$(date '+%Y-%m-%d %H:%M:%S')"
 }
 
 get_github_resource_download_url() {
@@ -241,8 +241,9 @@ delete_log() {
 
 download_ddns_go_archive_file() {
     mkdir -p "${MODDIR}/tmp"
-    echo "[$(get_log_date)] curl --silent --parallel --output \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" \"$LATEST_DOWNLOAD_URL\"" >> $EXTRA_LOG_SAVE_PATH/debug.log
-    curl --silent --parallel --output "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" "$LATEST_DOWNLOAD_URL" 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
+    download_cmd="curl --silent --parallel --output --location \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" \"$LATEST_DOWNLOAD_URL\""
+    echo "[$(get_log_date)] $download_cmd" >> $EXTRA_LOG_SAVE_PATH/debug.log
+    $download_cmd 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
     if [ $? -eq 0 ]; then
         chmod 755 "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}"
         return 0
@@ -252,9 +253,9 @@ download_ddns_go_archive_file() {
 }
 
 extract_ddns_go_archive_file() {
-    echo "[$(get_log_date)] tar -xzf \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" -C \"${MODDIR}/tmp\"" >> $EXTRA_LOG_SAVE_PATH/debug.log
-    tar -xzf "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" -C "${MODDIR}/tmp" 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
-    # tar -xzf "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" -C "${MODDIR}/tmp" 2>&1 > /dev/null
+    decompression_cmd="tar -xzf \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" -C \"${MODDIR}/tmp\""
+    echo "[$(get_log_date)] $decompression_cmd" >> $EXTRA_LOG_SAVE_PATH/debug.log
+    $decompression_cmd 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
     if [ $? -eq 0 ]; then
         mv -f "${MODDIR}/tmp/ddns-go" "${MODDIR}/bin/ddns-go"
         chmod 755 "${MODDIR}/bin/ddns-go"
