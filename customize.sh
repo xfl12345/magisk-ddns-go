@@ -14,6 +14,9 @@ chmod 755 -R $MODPATH/script/
 # ui_print "after  $(export -p)"
 . $MODPATH/script/ddns_go_update_util.sh
 
+cat /dev/null > ${EXTRA_LOG_SAVE_PATH}/info.log
+cat /dev/null > ${EXTRA_LOG_SAVE_PATH}/debug.log
+
 ui_print "- Detected architecture: $ARCH"
 ui_print "- Checking Internet connection"
 check_connectivity
