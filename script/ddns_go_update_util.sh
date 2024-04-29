@@ -40,7 +40,11 @@ WORKED_CLOUDFLARE_CDN_NODE=""
 RESULT_INSTALL_BINARY=""
 RESULT_CHECK_SHA256SUM=""
 RESULT_CHECK_CONNECTIVITY=""
+# RESULT_EXTRACT_DDNS_GO_ARCHIVE_FILE=""
 
+get_log_date() {
+    echo "$(date \"+%Y-%m-%d %H:%M:%S\")"
+}
 
 get_github_resource_download_url() {
     case "$2" in
@@ -237,17 +241,30 @@ delete_log() {
 
 download_ddns_go_archive_file() {
     mkdir -p "${MODDIR}/tmp"
-    curl --silent --parallel --output "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" "$LATEST_DOWNLOAD_URL"
-    chmod 755 "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}"
+    echo "[$(get_log_date)] curl --silent --parallel --output \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" \"$LATEST_DOWNLOAD_URL\"" >> $EXTRA_LOG_SAVE_PATH/debug.log
+    curl --silent --parallel --output "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" "$LATEST_DOWNLOAD_URL" 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
+    if [ $? -eq 0 ]; then
+        chmod 755 "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}"
+        return 0
+    else
+        return $?
+    fi
 }
 
 extract_ddns_go_archive_file() {
-    # echo "tar -xzf \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" -C \"${MODDIR}/tmp\"" >> $EXTRA_LOG_SAVE_PATH/debug.log
-    # tar -xzf "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" -C "${MODDIR}/tmp" 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
-    tar -xzf "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" -C "${MODDIR}/tmp" 2>&1 > /dev/null
-    mv -f "${MODDIR}/tmp/ddns-go" "${MODDIR}/bin/ddns-go"
-    chmod 755 "${MODDIR}/bin/ddns-go"
-    rm -r "${MODDIR}/tmp/"
+    echo "[$(get_log_date)] tar -xzf \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" -C \"${MODDIR}/tmp\"" >> $EXTRA_LOG_SAVE_PATH/debug.log
+    tar -xzf "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" -C "${MODDIR}/tmp" 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
+    # tar -xzf "${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}" -C "${MODDIR}/tmp" 2>&1 > /dev/null
+    if [ $? -eq 0 ]; then
+        mv -f "${MODDIR}/tmp/ddns-go" "${MODDIR}/bin/ddns-go"
+        chmod 755 "${MODDIR}/bin/ddns-go"
+        rm -r "${MODDIR}/tmp/"
+        # RESULT_EXTRACT_DDNS_GO_ARCHIVE_FILE="true"
+        return 0
+    else
+        # RESULT_EXTRACT_DDNS_GO_ARCHIVE_FILE="false"
+        return $?
+    fi
 }
 
 # 下载并解压更新包
@@ -297,7 +314,7 @@ check_and_update_version() {
     done
 
     if [ ! -x "${MODDIR}/bin/ddns-go" ]; then
-        echo "[$(date "+%Y-%m-%d %H:%M:%S")] ${MODDIR}/bin/ddns-go 未找到，直接从URL进行更新..." >>"${EXTRA_LOG_SAVE_PATH}/info.log"
+        echo "[$(get_log_date)] ${MODDIR}/bin/ddns-go 未找到，直接从URL进行更新..." >>"${EXTRA_LOG_SAVE_PATH}/info.log"
         download_and_extract
         update_and_restart
         return
@@ -308,7 +325,7 @@ check_and_update_version() {
         echo "[$(date "+%Y-%m-%d %H:%M:%S")] ${version}，最新版本" >>"${EXTRA_LOG_SAVE_PATH}/info.log"
         sed -i "s#^version=.*#version=${version}#g" "${MODDIR}/module.prop"
     else
-        echo "[$(date "+%Y-%m-%d %H:%M:%S")] ${version}，更新中..." >>"${EXTRA_LOG_SAVE_PATH}/info.log"
+        echo "[$(get_log_date)] ${version}，更新中..." >>"${EXTRA_LOG_SAVE_PATH}/info.log"
 
         download_and_extract
 

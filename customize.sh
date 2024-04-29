@@ -111,9 +111,17 @@ fi
 
 ui_print "- Downloading module files"
 download_ddns_go_archive_file
+if [ $? -ne 0 ]; then
+    ui_print "Mission failed due to download failed. See the log file [${EXTRA_LOG_SAVE_PATH}/debug.log] for more details."
+    abort
+fi
 
 ui_print "- Extracting module files"
 extract_ddns_go_archive_file
+if [ $? -ne 0 ]; then
+    ui_print "Mission failed due to extract file failed. See the log file [$EXTRA_LOG_SAVE_PATH/debug.log] for more details."
+    abort
+fi
 
 # export ARCH=$ARCH
 # export MODPATH=$MODPATH
