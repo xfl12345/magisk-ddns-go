@@ -1,7 +1,7 @@
 id=ddns_go
 name=ddns-go
 version=v
-versionCode=104
+versionCode=106
 author=酷安@七七琴979 酷安@小莫不小心睡着了 搞机客/搞机助手@情非得已 GitHub@xfl12345
 description=简单好用的DDNS，自动获得你的公网 IPv4 或 IPv6 地址，并解析到对应的域名服务。Repo: https://github.com/xfl12345/magisk-ddns-go
 updateJson=https://testingcf.jsdelivr.net/gh/xfl12345/magisk-ddns-go@latest/version.json
