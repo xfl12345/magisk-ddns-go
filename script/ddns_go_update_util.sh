@@ -241,7 +241,7 @@ delete_log() {
 
 download_ddns_go_archive_file() {
     mkdir -p "${MODDIR}/tmp"
-    download_cmd="curl --silent --parallel --output --location \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" \"$LATEST_DOWNLOAD_URL\""
+    download_cmd="curl --silent --parallel --location --output ${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME} $LATEST_DOWNLOAD_URL"
     echo "[$(get_log_date)] $download_cmd" >> $EXTRA_LOG_SAVE_PATH/debug.log
     $download_cmd 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
     if [ $? -eq 0 ]; then
@@ -253,7 +253,7 @@ download_ddns_go_archive_file() {
 }
 
 extract_ddns_go_archive_file() {
-    decompression_cmd="tar -xzf \"${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME}\" -C \"${MODDIR}/tmp\""
+    decompression_cmd="tar -xzf ${MODDIR}/tmp/${LATEST_DOWNLOAD_URL_FILENAME} -C ${MODDIR}/tmp"
     echo "[$(get_log_date)] $decompression_cmd" >> $EXTRA_LOG_SAVE_PATH/debug.log
     $decompression_cmd 2>&1 >> $EXTRA_LOG_SAVE_PATH/debug.log
     if [ $? -eq 0 ]; then
