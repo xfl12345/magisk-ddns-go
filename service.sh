@@ -13,6 +13,7 @@ chmod 755 -R $MODDIR/script/
 # ddns-go 守护进程
 . "$MODDIR/script/init_env.sh"
 export EXTRA_LOG_SAVE_PATH=$EXTRA_LOG_SAVE_PATH
+export DDNS_GO_CONFIG_FILE_PATH=$DDNS_GO_CONFIG_FILE_PATH
 ASH_STANDALONE=1 busybox sh -c "$MODDIR/script/ddns_go_daemon.sh" &
 
 # 启动 ddns-go 自动更新服务

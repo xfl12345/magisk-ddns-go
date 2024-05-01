@@ -126,6 +126,16 @@ if [ $? -ne 0 ]; then
     abort
 fi
 
+if [ -d "$DDNS_GO_CONFIG_OLD_SAVE_PATH" ]; then
+    ui_print "- Found old config. Migrating.."
+    mv $DDNS_GO_CONFIG_OLD_SAVE_PATH/* $DDNS_GO_CONFIG_SAVE_PATH/
+    if [ $? -ne 0 ]; then
+        ui_print "Mission failed due to migrate configuration directory failed."
+        abort
+    fi
+    rm -rf $DDNS_GO_CONFIG_OLD_SAVE_PATH/
+fi
+
 # export ARCH=$ARCH
 # export MODPATH=$MODPATH
 # ASH_STANDALONE=1 busybox sh -c "$MODPATH/service.sh" &

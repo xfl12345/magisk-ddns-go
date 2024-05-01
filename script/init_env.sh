@@ -24,9 +24,14 @@ if [[ x"$ARCH" == "x" ]]; then
     ARCH="$(cat $MODDIR/text/the_arch)"
 fi
 
+DDNS_GO_CONFIG_OLD_SAVE_PATH="/data/adb/modules/ddns_go/config"
+DDNS_GO_CONFIG_SAVE_PATH="/data/adb/ddns_go/config"
+DDNS_GO_CONFIG_FILE_PATH="$DDNS_GO_CONFIG_SAVE_PATH/ddns_go_config.yaml"
+mkdir -p $DDNS_GO_CONFIG_SAVE_PATH
+
 EXTRA_SAVE_PATH=/sdcard/Download/ddnsgo
-EXTRA_BIN_SAVE_PATH=$EXTRA_SAVE_PATH/bin
-EXTRA_LOG_SAVE_PATH=$EXTRA_SAVE_PATH/log
+EXTRA_BIN_SAVE_PATH="$EXTRA_SAVE_PATH/bin"
+EXTRA_LOG_SAVE_PATH="$EXTRA_SAVE_PATH/log"
 mkdir -p $EXTRA_BIN_SAVE_PATH
 mkdir -p $EXTRA_LOG_SAVE_PATH
 

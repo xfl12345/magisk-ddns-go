@@ -287,7 +287,9 @@ update_and_restart() {
     if pgrep -f 'ddns-go' >/dev/null; then
         pkill ddns-go
     fi
-    ASH_STANDALONE=1 busybox sh -c "$MODDIR/bin/ddns-go -l 127.0.0.1:9876 -dns 223.5.5.5 -c $MODDIR/config/ddns_go_config.yaml 2>&1 >> ${EXTRA_LOG_SAVE_PATH}/ddns-go.log" &
+    tmp_var="$MODDIR/bin/ddns-go -l 127.0.0.1:9876 -dns 223.5.5.5 -c $DDNS_GO_CONFIG_FILE_PATH 2>&1 >> ${EXTRA_LOG_SAVE_PATH}/ddns-go.log"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $tmp_var"
+    ASH_STANDALONE=1 busybox sh -c "$tmp_var" &
 }
 
 # 更新失败
