@@ -12,7 +12,7 @@ fi
 
 # Edit the resolv conf file if it exist
 
-chmod 755 -R $MODPATH/script/
+chmod 755 -R $MODDIR/script/
 . $MODDIR/script/init_env.sh
 
 rm -r $MODDIR/system/
