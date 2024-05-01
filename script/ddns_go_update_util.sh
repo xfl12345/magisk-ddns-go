@@ -77,7 +77,6 @@ install_binary() {
     if [[ x"$CURL_PATH" != "x" ]]; then
         download_tool_cmd="curl --silent --parallel --location --output"
     else
-        # download_tool_cmd="wget -q --prefer-family=IPv6 -O"
         download_tool_cmd="wget -q -O"
     fi
     download_tool_cmd="$download_tool_cmd $download_save_path $download_url"
@@ -106,7 +105,6 @@ update_latest_release_info() {
     if [[ x"$CURL_PATH" != "x" ]]; then
         download_tool_cmd="curl --silent --location "
     else
-        # download_tool_cmd="wget -q --prefer-family=IPv6 -O"
         download_tool_cmd="wget -q -O- "
     fi
     case "$GEOIP_LOCATION" in
