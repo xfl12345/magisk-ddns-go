@@ -231,10 +231,12 @@ check_connectivity() {
 
 # 删除大于1MB的log.log文件
 delete_log() {
-    log_size=$(wc -c <"${EXTRA_LOG_SAVE_PATH}/info.log")
-    if [[ "$log_size" -gt 1048576 ]]; then
-        rm "${EXTRA_LOG_SAVE_PATH}/info.log"
-    fi
+    for item in $(busybox ls *.log -1); do
+        log_size=$(wc -c <"${EXTRA_LOG_SAVE_PATH}/${item}")
+        if [[ "$log_size" -gt 1048576 ]]; then
+            cat /dev/null > "${EXTRA_LOG_SAVE_PATH}/${item}"
+        fi
+    done
 }
 
 download_ddns_go_archive_file() {
